@@ -13,7 +13,7 @@
 #define TFT_DC              16
 #define TFT_RST             23
 
-#define TFT_BL          4  // Dispaly backlight control pin
+#define TFT_BL          4  // Display backlight control pin
 #define ADC_EN          14
 #define ADC_PIN         34
 #define BUTTON_1        35
@@ -103,7 +103,7 @@ void wifi_scan()
     } else {
         tft.setTextDatum(TL_DATUM);
         tft.setCursor(0, 0);
-        Serial.printf("Fount %d net\n", n);
+        Serial.printf("Found %d net\n", n);
         for (int i = 0; i < n; ++i) {
             sprintf(buff,
                     "[%d]:%s(%d)",
