@@ -4,7 +4,7 @@
 ## 1.Install the following dependency library files:
 **The following two libraries are not original branches, they are my modified branches.**
 - [TFT_eSPI](https://github.com/lewisxhe/TFT_eSPI)
-- [Button2](https://github.com/lewisxhe/B·utton2)
+- [Button2](https://github.com/lewisxhe/Button2)
 
 
 
