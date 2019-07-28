@@ -2,8 +2,11 @@
 
 ![image](https://github.com/Xinyuan-LilyGO/TTGO-T-Display/blob/master/T-display.jpg)
 ## 1.Install the following dependency library files:
+**The following two libraries are not original branches, they are my modified branches.**
 - [TFT_eSPI](https://github.com/lewisxhe/TFT_eSPI)
-- [Button2](https://github.com/lewisxhe/Button2)
+- [Button2](https://github.com/lewisxhe/B·utton2)
+
+
 
 
 ## 2.TFT_eSPI settings
