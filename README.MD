@@ -1,6 +1,6 @@
 # TTGO T-Display
 
-![image](https://github.com/Xinyuan-LilyGO/TTGO-T-Display/blob/master/T-display.jpg)
+![image](https://github.com/Xinyuan-LilyGO/TTGO-T-Display/blob/master/image/pinmap.jpg)
 ## 1.Install the following dependency library files:
 **The following two libraries are not original branches, they are my modified branches.**
 - [TFT_eSPI](https://github.com/lewisxhe/TFT_eSPI)
