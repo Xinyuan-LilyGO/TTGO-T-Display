@@ -2,11 +2,8 @@
 
 ![image](https://github.com/Xinyuan-LilyGO/TTGO-T-Display/blob/master/image/pinmap.jpg)
 ## 1.Install the following dependency library files:
-**The following two libraries are not original branches, they are my modified branches.**
-- [TFT_eSPI](https://github.com/lewisxhe/TFT_eSPI)
-- [Button2](https://github.com/lewisxhe/Button2)
-
-
+- [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)        
+- [Button2](https://github.com/LennartHennigs/Button2)
 
 
 ## 2.TFT_eSPI settings
@@ -31,3 +28,6 @@
 | BUTTON1    | 35     |
 | BUTTON2    | 0      |
 | ADC Power  | 14     |
+
+2019/08/06:
+* The TFT_eSPI and Button2 libraries have been synchronized to the main branch
