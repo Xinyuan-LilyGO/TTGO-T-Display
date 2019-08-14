@@ -4,8 +4,15 @@
 #include <Wire.h>
 #include <Button2.h>
 #include "esp_adc_cal.h"
-#include <Ticker.h>
 #include "bmp.h"
+
+#ifndef TFT_DISPOFF
+#define TFT_DISPOFF 0x28
+#endif
+
+#ifndef TFT_SLPIN
+#define TFT_SLPIN   0x10
+#endif
 
 #define TFT_MOSI            19
 #define TFT_SCLK            18
@@ -13,21 +20,19 @@
 #define TFT_DC              16
 #define TFT_RST             23
 
-#define TFT_BL          4  // Dispaly backlight control pin
+#define TFT_BL          4  // Display backlight control pin
 #define ADC_EN          14
 #define ADC_PIN         34
 #define BUTTON_1        35
 #define BUTTON_2        0
-#define BUTTONS_MAP     {BUTTON_1,BUTTON_2}
 
 TFT_eSPI tft = TFT_eSPI(135, 240); // Invoke custom library
+Button2 btn1(BUTTON_1);
+Button2 btn2(BUTTON_2);
 
-Button2 *pBtns = nullptr;
-uint8_t g_btns[] =  BUTTONS_MAP;
 char buff[512];
 int vref = 1100;
 int btnCick = false;
-Ticker tick;
 
 void showVoltage()
 {
@@ -46,11 +51,7 @@ void showVoltage()
 
 void button_init()
 {
-    uint8_t args = sizeof(g_btns) / sizeof(g_btns[0]);
-    pBtns = new Button2 [args];
-    pBtns[0] = Button2(g_btns[0]);
-    pBtns[1] = Button2(g_btns[1]);
-    pBtns[0].setLongClickHandler([](Button2 & b) {
+    btn1.setLongClickHandler([](Button2 & b) {
         btnCick = false;
         int r = digitalRead(TFT_BL);
         tft.fillScreen(TFT_BLACK);
@@ -59,17 +60,18 @@ void button_init()
         tft.drawString("Press again to wake up",  tft.width() / 2, tft.height() / 2 );
         delay(6000);
         digitalWrite(TFT_BL, !r);
+
         tft.writecommand(TFT_DISPOFF);
         tft.writecommand(TFT_SLPIN);
         esp_sleep_enable_ext1_wakeup(GPIO_SEL_35, ESP_EXT1_WAKEUP_ALL_LOW);
         esp_deep_sleep_start();
     });
-    pBtns[0].setPressedHandler([](Button2 & b) {
+    btn1.setPressedHandler([](Button2 & b) {
         Serial.println("Detect Voltage..");
         btnCick = true;
     });
 
-    pBtns[1].setPressedHandler([](Button2 & b) {
+    btn2.setPressedHandler([](Button2 & b) {
         btnCick = false;
         Serial.println("btn press wifi scan");
         wifi_scan();
@@ -78,9 +80,8 @@ void button_init()
 
 void button_loop()
 {
-    for (int i = 0; i < sizeof(g_btns) / sizeof(g_btns[0]); ++i) {
-        pBtns[i].loop();
-    }
+    btn1.loop();
+    btn2.loop();
 }
 
 void wifi_scan()
@@ -103,7 +104,7 @@ void wifi_scan()
     } else {
         tft.setTextDatum(TL_DATUM);
         tft.setCursor(0, 0);
-        Serial.printf("Fount %d net\n", n);
+        Serial.printf("Found %d net\n", n);
         for (int i = 0; i < n; ++i) {
             sprintf(buff,
                     "[%d]:%s(%d)",
@@ -123,23 +124,22 @@ void setup()
 
     Serial.println("Start");
     tft.init();
-    tft.setRotation(0);
+    tft.setRotation(1);
     tft.fillScreen(TFT_BLACK);
     tft.setTextSize(2);
     tft.setTextColor(TFT_WHITE);
     tft.setCursor(0, 0);
     tft.setTextDatum(MC_DATUM);
-    tft.drawString("TTGO",  tft.width() / 2, tft.height() / 2 );
     tft.setTextSize(1);
 
     if (TFT_BL > 0) {
         pinMode(TFT_BL, OUTPUT);
         digitalWrite(TFT_BL, HIGH);
     }
-
-    tft.setRotation(1);
+    tft.setSwapBytes(true);
     tft.pushImage(0, 0,  240, 135, ttgo);
     delay(5000);
+
     tft.setRotation(0);
     int i = 5;
     while (i--) {
