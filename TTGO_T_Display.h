@@ -26,6 +26,8 @@
 #define TFT_CS    5 // Not connected
 #define TFT_DC    16
 #define TFT_RST   23  // Connect reset to ensure display initialises
+#define TFT_BL 4
+#define TFT_BACKLIGHT_ON HIGH
 
 // For NodeMCU - use pin numbers in the form PIN_Dx where Dx is the NodeMCU pin designation
 // #define TFT_CS   -1      // Define as not used

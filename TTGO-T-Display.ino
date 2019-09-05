@@ -34,6 +34,14 @@ char buff[512];
 int vref = 1100;
 int btnCick = false;
 
+//! Long time delay, it is recommended to use shallow sleep, which can effectively reduce the current consumption
+void espDelay(int ms)
+{   
+    esp_sleep_enable_timer_wakeup(ms * 1000);
+    esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_PERIPH,ESP_PD_OPTION_ON);
+    esp_light_sleep_start();
+}
+
 void showVoltage()
 {
     static uint64_t timeStamp = 0;
@@ -58,7 +66,7 @@ void button_init()
         tft.setTextColor(TFT_GREEN, TFT_BLACK);
         tft.setTextDatum(MC_DATUM);
         tft.drawString("Press again to wake up",  tft.width() / 2, tft.height() / 2 );
-        delay(6000);
+        espDelay(6000);
         digitalWrite(TFT_BL, !r);
 
         tft.writecommand(TFT_DISPOFF);
@@ -120,8 +128,6 @@ void wifi_scan()
 void setup()
 {
     Serial.begin(115200);
-    delay(1000);
-
     Serial.println("Start");
     tft.init();
     tft.setRotation(1);
@@ -132,23 +138,26 @@ void setup()
     tft.setTextDatum(MC_DATUM);
     tft.setTextSize(1);
 
-    if (TFT_BL > 0) {
-        pinMode(TFT_BL, OUTPUT);
-        digitalWrite(TFT_BL, HIGH);
-    }
+    //! The backlight has been initialized in the TFT_eSPI library
+    // if (TFT_BL > 0) {
+    //     pinMode(TFT_BL, OUTPUT);
+    //     digitalWrite(TFT_BL, HIGH);
+    // }
+
+
     tft.setSwapBytes(true);
     tft.pushImage(0, 0,  240, 135, ttgo);
-    delay(5000);
+    espDelay(5000);
 
     tft.setRotation(0);
     int i = 5;
     while (i--) {
         tft.fillScreen(TFT_RED);
-        delay(1000);
+        espDelay(1000);
         tft.fillScreen(TFT_BLUE);
-        delay(1000);
+        espDelay(1000);
         tft.fillScreen(TFT_GREEN);
-        delay(1000);
+        espDelay(1000);
     }
 
     button_init();
