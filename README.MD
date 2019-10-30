@@ -1,16 +1,21 @@
 # TTGO T-Display
 
 ![image](https://github.com/Xinyuan-LilyGO/TTGO-T-Display/blob/master/image/pinmap.jpg)
-
 ## 1.Install the following dependency library files:
 - [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)        
 - [Button2](https://github.com/LennartHennigs/Button2)
 
-
 ## 2.TFT_eSPI settings
-- Move or copy `User_Setups/TTGO_T_Display.h` to `TFT_eSPI/User_Setups/`
-- Add `#include <User_Setups/TTGO_T_Display.h>` to  `TFT_eSPI/User_Setup_Select.h`
-  
+- Install TFT_eSPI, in `TFT_eSPI/User_Setup_Select.h`, comment out the default settings `#include <User_Setup.h>` , select `#include <User_Setups/Setup25_TTGO_T_Display.h>` , Save Settings.
+
+* Like the picture below
+
+![2.png](image/2.png)
+
+
+## 3.Board choose
+- The board can choose `ESP32 Dev Module`, other settings can keep the default
+
 
 ## Pinout
 | Name       | V18    |
