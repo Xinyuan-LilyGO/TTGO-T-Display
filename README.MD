@@ -1,21 +1,26 @@
 # TTGO T-Display
 
 ![image](https://github.com/Xinyuan-LilyGO/TTGO-T-Display/blob/master/image/pinmap.jpg)
-## 1.Install the following dependency library files:
+## 1.Uses the following dependency libraries:
+For more informations see the sources
 - [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)        
 - [Button2](https://github.com/LennartHennigs/Button2)
 
 ## 2.TFT_eSPI settings
-- Install TFT_eSPI, in `TFT_eSPI/User_Setup_Select.h`, comment out the default settings `#include <User_Setup.h>` , select `#include <User_Setups/Setup25_TTGO_T_Display.h>` , Save Settings.
+Settings are managed by the build tooling PlatformIO
+- [TFT_eSPI settings](https://github.com/Bodmer/TFT_eSPI/blob/master/Tools/PlatformIO/Configuring%20options.txt)
+- based on TFT_eSPI provided values in [User_Setups/Setup25_TTGO_T_Display.h](https://github.com/Bodmer/TFT_eSPI/blob/master/User_Setups/Setup25_TTGO_T_Display.h) 
 
-* Like the picture below
+## 3.Install
+- [Install PlateformIO](https://docs.platformio.org/en/latest/installation.html#python-package-manager)
+- PlatformIO will manage all required software for building (aka: plateform like esp32, dependencies like the above TFT_eSPI)
 
-![2.png](image/2.png)
-
-
-## 3.Board choose
-- The board can choose `ESP32 Dev Module`, other settings can keep the default
-
+## 3.Build
+- go to the directory of this project
+- open a terminal
+- build with : `pio run` (first time is long because it needs to download all the requirements)
+- upload to the board (needs the borad connected using USB + appropriate user settings see installation) : `pio run --target upload`
+- See th e`Serial` output : `pio device monitor --baud 115200`
 
 ## Pinout
 | Name       | V18    |
@@ -34,6 +39,3 @@
 | BUTTON1    | 35     |
 | BUTTON2    | 0      |
 | ADC Power  | 14     |
-
-2019/08/06:
-* The TFT_eSPI and Button2 libraries have been synchronized to the main branch
