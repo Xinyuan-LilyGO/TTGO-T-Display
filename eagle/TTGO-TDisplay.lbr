@@ -7,7 +7,7 @@
 <setting keepoldvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="50" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -158,7 +158,7 @@
 <pad name="13-G13-A14" x="1.11" y="26.17" drill="1" diameter="1.78" rot="R90"/>
 <pad name="15-G15-A13" x="1.11" y="28.71" drill="1" diameter="1.78" rot="R90"/>
 <pad name="2-G2-A12" x="1.11" y="31.25" drill="1" diameter="1.78" rot="R180"/>
-<pad name="17-NA" x="1.11" y="33.79" drill="1" diameter="1.78" rot="R180"/>
+<pad name="17-DIONLY" x="1.11" y="33.79" drill="1" diameter="1.78" rot="R180"/>
 <pad name="22-SCL" x="1.11" y="36.33" drill="1" diameter="1.78" rot="R180"/>
 <pad name="21-SDA" x="1.11" y="38.87" drill="1" diameter="1.78" rot="R180"/>
 <pad name="GND_1" x="1.11" y="41.41" drill="1" diameter="1.78" rot="R180"/>
@@ -218,23 +218,24 @@
 <pin name="GND" x="-2.54" y="2.54" length="middle" direction="pwr"/>
 <pin name="3V3" x="-2.54" y="5.08" length="middle" direction="pwr"/>
 <pin name="5V" x="-2.54" y="7.62" length="middle" direction="pwr"/>
-<pin name="2/A12" x="-2.54" y="25.4" length="middle"/>
-<pin name="15/A13" x="-2.54" y="22.86" length="middle"/>
-<pin name="13/A14" x="-2.54" y="20.32" length="middle"/>
-<pin name="12/A15" x="-2.54" y="17.78" length="middle" direction="out"/>
-<pin name="21/SDA" x="38.1" y="27.94" length="middle" rot="R180"/>
-<pin name="22/SCL" x="38.1" y="25.4" length="middle" rot="R180"/>
+<pin name="2/A12" x="-2.54" y="33.02" length="middle"/>
+<pin name="15/A13" x="-2.54" y="27.94" length="middle"/>
+<pin name="13/A14" x="-2.54" y="30.48" length="middle"/>
+<pin name="12/A15" x="-2.54" y="15.24" length="middle" direction="out"/>
+<pin name="21/SDA" x="38.1" y="15.24" length="middle" rot="R180"/>
+<pin name="22/SCL" x="38.1" y="17.78" length="middle" rot="R180"/>
 <pin name="26/A19/DAC2" x="38.1" y="2.54" length="middle" rot="R180"/>
 <pin name="25/A18/DAC1" x="38.1" y="5.08" length="middle" rot="R180"/>
 <pin name="39/A3/SVN" x="38.1" y="7.62" length="middle" rot="R180"/>
 <pin name="36/A0/SVP" x="38.1" y="10.16" length="middle" rot="R180"/>
-<pin name="37" x="38.1" y="17.78" length="middle" rot="R180"/>
-<pin name="38" x="38.1" y="20.32" length="middle" rot="R180"/>
-<pin name="32/A4" x="-2.54" y="33.02" length="middle"/>
-<pin name="33/A5" x="-2.54" y="30.48" length="middle"/>
+<pin name="37" x="38.1" y="27.94" length="middle" rot="R180"/>
+<pin name="38" x="38.1" y="30.48" length="middle" rot="R180"/>
+<pin name="32/A4" x="-2.54" y="22.86" length="middle"/>
+<pin name="33/A5" x="-2.54" y="20.32" length="middle"/>
 <text x="10.16" y="38.1" size="1.27" layer="94">TTGO-T-DISPLAY</text>
-<pin name="27/A17" x="-2.54" y="15.24" length="middle"/>
+<pin name="27/A17" x="-2.54" y="25.4" length="middle"/>
 <wire x1="0" y1="40.64" x2="35.56" y2="40.64" width="0.254" layer="94"/>
+<pin name="17" x="38.1" y="33.02" length="middle" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -250,6 +251,7 @@ https://github.com/Xinyuan-LilyGO/TTGO-T-Display</description>
 <connect gate="G$1" pin="12/A15" pad="12-G12-A15"/>
 <connect gate="G$1" pin="13/A14" pad="13-G13-A14"/>
 <connect gate="G$1" pin="15/A13" pad="15-G15-A13"/>
+<connect gate="G$1" pin="17" pad="17-DIONLY"/>
 <connect gate="G$1" pin="2/A12" pad="2-G2-A12"/>
 <connect gate="G$1" pin="21/SDA" pad="21-SDA"/>
 <connect gate="G$1" pin="22/SCL" pad="22-SCL"/>
@@ -275,6 +277,7 @@ https://github.com/Xinyuan-LilyGO/TTGO-T-Display</description>
 <connect gate="G$1" pin="12/A15" pad="12-G12-A15"/>
 <connect gate="G$1" pin="13/A14" pad="13-G13-A14"/>
 <connect gate="G$1" pin="15/A13" pad="15-G15-A13"/>
+<connect gate="G$1" pin="17" pad="17-NA"/>
 <connect gate="G$1" pin="2/A12" pad="2-G2-A12"/>
 <connect gate="G$1" pin="21/SDA" pad="21-SDA"/>
 <connect gate="G$1" pin="22/SCL" pad="22-SCL"/>
