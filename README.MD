@@ -16,6 +16,9 @@
 ## 3.Board choose
 - The board can choose `ESP32 Dev Module`, other settings can keep the default
 
+## 4. SD card connection
+- Demonstrate how to use the second SPI device, using the SD card as a demonstration device
+![](image/SD.jpg)
 
 ## Pinout
 | Name       | V18    |
