@@ -20,11 +20,11 @@
 #define TFT_DC              16
 #define TFT_RST             23
 
-#define TFT_BL          4   // Display backlight control pin
-#define ADC_EN          14  //ADC_EN is the ADC detection enable port
-#define ADC_PIN         34
-#define BUTTON_1        35
-#define BUTTON_2        0
+#define TFT_BL              4   // Display backlight control pin
+#define ADC_EN              14  //ADC_EN is the ADC detection enable port
+#define ADC_PIN             34
+#define BUTTON_1            35
+#define BUTTON_2            0
 
 TFT_eSPI tft = TFT_eSPI(135, 240); // Invoke custom library
 Button2 btn1(BUTTON_1);
@@ -33,6 +33,47 @@ Button2 btn2(BUTTON_2);
 char buff[512];
 int vref = 1100;
 int btnCick = false;
+
+#define ENABLE_SPI_SDCARD
+
+//Uncomment will use SDCard, this is just a demonstration,
+//how to use the second SPI
+#ifdef ENABLE_SPI_SDCARD
+
+#include "FS.h"
+#include "SD.h"
+#include <SPI.h>
+
+SPIClass SPI1(HSPI);
+
+#define MY_CS       33
+#define MY_SCLK     25
+#define MY_MISO     27
+#define MY_MOSI     26
+
+void setupSDCard()
+{
+    SPI1.begin(MY_SCLK, MY_MISO, MY_MOSI, MY_CS);
+    //Assuming use of SPI SD card
+    if (!SD.begin(MY_CS, SPI1)) {
+        Serial.println("Card Mount Failed");
+        tft.setTextColor(TFT_RED);
+        tft.drawString("SDCard Mount FAIL", tft.width() / 2, tft.height() / 2 - 32);
+        tft.setTextColor(TFT_GREEN);
+    } else {
+        tft.setTextColor(TFT_GREEN);
+        Serial.println("SDCard Mount PASS");
+        tft.drawString("SDCard Mount PASS", tft.width() / 2, tft.height() / 2 - 48);
+        String size = String((uint32_t)(SD.cardSize() / 1024 / 1024)) + "MB";
+        tft.drawString(size, tft.width() / 2, tft.height() / 2 - 32);
+    }
+}
+#else
+#define setupSDCard()
+#endif
+
+
+void wifi_scan();
 
 //! Long time delay, it is recommended to use shallow sleep, which can effectively reduce the current consumption
 void espDelay(int ms)
@@ -151,14 +192,15 @@ void setup()
     tft.setTextDatum(MC_DATUM);
     tft.setTextSize(1);
 
-    if (TFT_BL > 0) { // TFT_BL has been set in the TFT_eSPI library in the User Setup file TTGO_T_Display.h
-        pinMode(TFT_BL, OUTPUT); // Set backlight pin to output mode
+    if (TFT_BL > 0) {                           // TFT_BL has been set in the TFT_eSPI library in the User Setup file TTGO_T_Display.h
+        pinMode(TFT_BL, OUTPUT);                // Set backlight pin to output mode
         digitalWrite(TFT_BL, TFT_BACKLIGHT_ON); // Turn backlight on. TFT_BACKLIGHT_ON has been set in the TFT_eSPI library in the User Setup file TTGO_T_Display.h
     }
 
     tft.setSwapBytes(true);
     tft.pushImage(0, 0,  240, 135, ttgo);
     espDelay(5000);
+
 
     tft.setRotation(0);
     tft.fillScreen(TFT_RED);
@@ -182,8 +224,13 @@ void setup()
         Serial.println("Default Vref: 1100mV");
     }
 
+
     tft.fillScreen(TFT_BLACK);
     tft.setTextDatum(MC_DATUM);
+
+    setupSDCard();
+
+
     tft.drawString("LeftButton:", tft.width() / 2, tft.height() / 2 - 16);
     tft.drawString("[WiFi Scan]", tft.width() / 2, tft.height() / 2 );
     tft.drawString("RightButton:", tft.width() / 2, tft.height() / 2 + 16);
