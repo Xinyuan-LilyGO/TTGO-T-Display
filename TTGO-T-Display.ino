@@ -42,9 +42,8 @@ int btnCick = false;
 
 #include "FS.h"
 #include "SD.h"
-#include <SPI.h>
 
-SPIClass SPI1(HSPI);
+SPIClass SDSPI(HSPI);
 
 #define MY_CS       33
 #define MY_SCLK     25
@@ -53,9 +52,9 @@ SPIClass SPI1(HSPI);
 
 void setupSDCard()
 {
-    SPI1.begin(MY_SCLK, MY_MISO, MY_MOSI, MY_CS);
+    SDSPI.begin(MY_SCLK, MY_MISO, MY_MOSI, MY_CS);
     //Assuming use of SPI SD card
-    if (!SD.begin(MY_CS, SPI1)) {
+    if (!SD.begin(MY_CS, SDSPI)) {
         Serial.println("Card Mount Failed");
         tft.setTextColor(TFT_RED);
         tft.drawString("SDCard Mount FAIL", tft.width() / 2, tft.height() / 2 - 32);
