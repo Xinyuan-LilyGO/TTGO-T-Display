@@ -6,6 +6,8 @@
 #include "esp_adc_cal.h"
 #include "bmp.h"
 
+#include "driver/rtc_io.h"
+
 
 // TFT Pins has been set in the TFT_eSPI library in the User Setup file TTGO_T_Display.h
 // #define TFT_MOSI            19
@@ -109,6 +111,10 @@ void button_init()
         //After using light sleep, you need to disable timer wake, because here use external IO port to wake up
         esp_sleep_disable_wakeup_source(ESP_SLEEP_WAKEUP_TIMER);
         // esp_sleep_enable_ext1_wakeup(GPIO_SEL_35, ESP_EXT1_WAKEUP_ALL_LOW);
+        rtc_gpio_init(GPIO_NUM_14);
+        rtc_gpio_set_direction(GPIO_NUM_14, RTC_GPIO_MODE_OUTPUT_ONLY);
+        rtc_gpio_set_level(GPIO_NUM_14, 1);
+        delay(500); 
         esp_sleep_enable_ext0_wakeup(GPIO_NUM_35, 0);
         delay(200);
         esp_deep_sleep_start();
