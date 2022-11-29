@@ -30,7 +30,7 @@
 | TFT_SCLK   | 18     |
 | TFT_CS     | 5      |
 | TFT_DC     | 16     |
-| TFT_RST    | N/A    |
+| TFT_RST    | 23     |
 | TFT_BL     | 4      |
 | I2C_SDA    | 21     |
 | I2C_SCL    | 22     |
